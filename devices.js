@@ -7207,6 +7207,19 @@ const devices = [
             await bind(endpoint, coordinatorEndpoint, ['genIdentify', 'genOnOff', 'genBinaryInput']);
         },
     },
+    
+    
+{
+       zigbeeModel: ['4512706'],
+       model: 'NAMRONRGBREMOTE',
+       vendor: 'Namron',
+       description: 'Remote control',
+       supports: 'dim, colortemp, groups, setcolor ',
+       fromZigbee: [fz.NAMRONRGB_on, fz.NAMRONRGB_off,fz.generic_battery, fz.NAMRONRGB_up_down_dim, fz.NAMRONRGB_cw_ww, fz.NAMRONRGB_scenes, fz.NAMRONRGB_move_to_color_temp],
+       toZigbee: [],
+   },    
+    
+    
 ];
 
 module.exports = devices.map((device) =>
