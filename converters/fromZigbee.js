@@ -400,6 +400,73 @@ const converters = {
      * Device specific converters, not recommended for re-use.
      * TODO: This has not been fully sorted out yet.
      */
+    
+    
+    NAMRONRGB_on: {
+        cluster: 'genOnOff',
+        type: 'commandOn',
+        convert: (model, msg, publish, options) => {
+            const button = msg.groupID-62720;
+            return {action: 'on',  action_group: button};
+        },
+    },
+    NAMRONRGB_off: {
+        cluster: 'genOnOff',
+        type: 'commandOff',
+        convert: (model, msg, publish, options) => {
+            const button = msg.groupID-62720;
+            return {action: 'off',  action_group: button};
+        },
+    },
+
+
+  NAMRONRGB_up_down_dim: {
+        cluster: 'genLevelCtrl',
+        type: 'commandStepWithOnOff',
+        convert: (model, msg, publish, options) => {
+            const locgroup = msg.groupID-62720;
+            const direction = msg.data.stepmode === 1 ? 'down-dim' : 'up-dim';
+            return {action: direction, action_group: locgroup};
+        },
+    },
+
+  NAMRONRGB_cw_ww: {
+        cluster: 'lightingColorCtrl',
+        type: 'commandStepColorTemp',
+        convert: (model, msg, publish, options) => {
+            const locgroup = msg.groupID-62720;
+            const direction = msg.data.stepmode === 3 ? 'cw' : 'ww';
+            return {action: direction, action_group: locgroup};
+        },
+    },
+
+
+ NAMRONRGB_scenes: {
+        cluster: 'genScenes',
+        type: 'commandRecall',
+        convert: (model, msg, publish, options) => {
+            const locgroup = msg.groupID-62720;
+            const scenenumber = msg.data.sceneid;
+            return {action: `scene_${scenenumber}`, action_group: locgroup};
+        },
+    },
+
+
+ NAMRONRGB_move_to_color_temp: {
+        cluster: 'lightingColorCtrl',
+        type: 'commandMoveToColorTemp',
+        convert: (model, msg, publish, options) => {
+            const locgroup = msg.groupID-62720;
+            return {action: 'setcolor', action_group: locgroup, transition_time: msg.data.transtime, action_color_temperature: msg.data.colortemp};
+        },
+    },
+
+    
+    
+    
+    
+    
+    
     HS2SK_SKHMP30I1_power: {
         cluster: 'haElectricalMeasurement',
         type: ['attributeReport', 'readResponse'],
